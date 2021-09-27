@@ -3,6 +3,7 @@
 use super::super::math;
 
 use math::intersection::Intersectable;
+use math::intersection::Intersection;
 use math::vector::Vec;
 use math::ray::Ray;
 use math::fp;
@@ -17,7 +18,7 @@ pub fn new(center: Vec, radius: fp) -> Sphere {
 }
 
 impl Intersectable for Sphere {
-	fn intersect(&self, ray: &Ray) -> Option<Ray> {
+	fn intersect(&self, ray: &Ray) -> Option<Intersection> {
 		let ray_to_center = self.center - ray.origin;
 		let ray_to_center_dist = ray_to_center.len();
 		

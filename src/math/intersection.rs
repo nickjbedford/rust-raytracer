@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+pub use std::option::Option;
 use super::ray;
 use super::vector::Vec;
 use ray::Ray;
@@ -23,5 +24,5 @@ pub fn outside(origin: Vec, direction: Vec) -> Intersection {
 }
 
 pub trait Intersectable {
-	fn intersect(&self, ray: &Ray) -> Option<Ray>;
+	fn intersect(&self, ray: &Ray) -> Option<Intersection>;
 }

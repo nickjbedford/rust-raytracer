@@ -4,6 +4,7 @@ mod math;
 use math::vector;
 use math::ray;
 use math::fp;
+use math::intersection::Intersectable;
 
 fn main()
 {
@@ -42,7 +43,7 @@ fn test_ray(y: fp)
 
 	match sphere.intersect(&ray) {
 		Some(i) => {
-			println!("Intersection:  {0}", i);
+			println!("Intersection:  {0}", i.ray);
 		},
 		None => {
 			println!("No intersection!")

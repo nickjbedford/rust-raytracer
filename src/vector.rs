@@ -22,8 +22,11 @@ pub fn new(x: fp, y: fp, z: fp) -> Vec {
 }
 
 impl Vec {
+	pub fn len_sqr(self) -> fp {
+		return self.dot(self);
+	}
 	pub fn len(self) -> fp {
-		return self.dot(self).sqrt();
+		return self.len_sqr().sqrt();
 	}
 
 	pub fn dot(self, rhs: Vec) -> fp {
@@ -39,7 +42,7 @@ impl Vec {
 	}
 
 	pub fn reflect(self, normal: Vec) -> Vec {
-		return self - (self.dot(normal) * 2.0) * normal
+		return self - (self.dot(normal) * 2.0) * normal;
 	}
 }
 

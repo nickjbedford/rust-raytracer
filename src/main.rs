@@ -1,14 +1,14 @@
-use crate::intersectable::Intersectable;
-
-mod vector;
-mod ray;
 mod shapes;
-mod intersectable;
+mod math;
+
+use math::vector;
+use math::ray;
+use math::fp;
 
 fn main()
 {
 	test_reflect();
-	test_ray();
+	test_ray(0.0);
 }
 
 fn test_reflect()
@@ -22,27 +22,30 @@ fn test_reflect()
 	println!("Reflected: {0}", reflected);
 }
 
-fn test_ray()
+fn test_ray(y: fp)
 {
+	println!("===================");
+	println!("SPHERE INTERSECTION");
+	println!("===================");
+
 	let ray = ray::new(
 		vector::ZERO,
 		vector::X);
 
 	let sphere =
 		shapes::sphere::new(
-			vector::new(10.0, 0.0, 0.0),
+			vector::new(10.0, y, 0.0),
 			2.5);
 
 	println!("Ray: {0}", ray);
 	println!("Sphere: {0}", sphere);
 
-	let intersection = sphere.intersect(&ray);
-	match intersection {
+	match sphere.intersect(&ray) {
 		Some(i) => {
-			let p0 = i.0;
-			println!("Intersection (closest):  {0}", i.0);
-			println!("Intersection (furthest): {0}", i.1);
+			println!("Intersection:  {0}", i);
 		},
-		_ => {}
+		None => {
+			println!("No intersection!")
+		}
 	}
 }

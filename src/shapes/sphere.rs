@@ -1,10 +1,11 @@
 #![allow(dead_code)]
 
-use super::super::intersectable::Intersectable;
-use super::super::ray::Ray;
-use super::super::ray;
-use super::super::vector::Vec;
-use super::super::vector::fp;
+use super::super::math;
+
+use math::intersection::Intersectable;
+use math::vector::Vec;
+use math::ray::Ray;
+use math::fp;
 
 pub struct Sphere {
 	pub center: Vec,
@@ -16,22 +17,17 @@ pub fn new(center: Vec, radius: fp) -> Sphere {
 }
 
 impl Intersectable for Sphere {
-	fn intersect(&self, ray: &Ray) -> Option<(Ray,Ray)> {
-		let l = self.center - ray.origin;
-		let tc = l.dot(ray.direction);
-		if tc < 0.0 {
-			return None;
+	fn intersect(&self, ray: &Ray) -> Option<Ray> {
+		let ray_to_center = self.center - ray.origin;
+		let ray_to_center_dist = ray_to_center.len();
+		
+		if ray_to_center_dist >= self.radius { // ray is outside or on surface of sphere
+			if ray_to_center.dot(ray.direction) < 0.0 { // ray is pointing away from sphere
+				return None
+			}
 		}
-		let d = (tc * tc - l.len_sqr()).sqrt();
-		if d > self.radius {
-			return None;
-		}
-		let t1c = (self.radius * self.radius - d * d).sqrt();
-		let p1 = *ray + (tc - t1c);
-		let p2 = *ray + (tc + t1c);
-		let n1 = (p1 - self.center).unit();
-		let n2 = (p2 - self.center).unit();
-		return Some((ray::new(p1, n1), ray::new(p2, n2)));
+
+		return None
 	}
 }
 

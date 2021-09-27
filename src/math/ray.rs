@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
-use super::vector::Vec;
-use super::vector::fp;
+pub use super::vector::Vec;
+pub use super::fp;
 use std::ops;
 
 #[derive(Copy)]

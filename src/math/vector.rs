@@ -1,9 +1,7 @@
 #![allow(dead_code)]
 
 use std::ops;
-
-#[allow(non_camel_case_types)]
-pub type fp = f32;
+use super::fp;
 
 #[derive(Copy)]
 pub struct Vec {

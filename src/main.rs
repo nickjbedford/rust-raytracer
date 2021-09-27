@@ -1,5 +1,6 @@
 mod shapes;
 mod math;
+mod tests;
 
 use math::vector;
 use math::ray;

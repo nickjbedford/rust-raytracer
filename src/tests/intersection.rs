@@ -85,3 +85,35 @@ pub fn ray_toward_sphere_has_intersection()
         _ => {}
     }
 }
+
+#[test]
+pub fn ray_past_sphere_has_no_intersection()
+{
+    let ray = ray::new(vector::ZERO, vector::X);
+    let sphere = sphere::new(vector::new(5.0, 1.5, 0.0), 1.0);
+    let intersection = sphere.intersect(&ray);
+
+    assert!(intersection.is_none());
+}
+
+#[test]
+pub fn ray_near_tangent_of_sphere_has_intersection()
+{
+    const Y: fp = 1.0;
+    let ray = ray::new(vector::new(0.0, Y, 0.0), vector::X);
+    let sphere = sphere::new(vector::X * 5.0, 1.0);
+    let intersection = sphere.intersect(&ray);
+
+    assert!(intersection.is_some());
+    match intersection {
+        Some(i) => {
+            match i.location {
+                Location::Outside => assert!(true),
+                Location::Inside => assert!(false)
+            };
+            assert!(i.ray.origin.is_approximately(vector::new(5.0, Y, 0.0)));
+            assert!(i.ray.direction.is_approximately(vector::new(0.0, 1.0, 0.0)));
+        },
+        _ => {}
+    }
+}
